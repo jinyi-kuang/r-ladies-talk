@@ -58,7 +58,6 @@ expss::var_lab(data$Q1vii)
 expss::val_lab(data$Q1vii)
 ```
 
-
 ## Descriptive statistics  
 ```{r, include=T, error=F, message=F, echo = T}
 library(expss)
@@ -114,7 +113,6 @@ library(plotly)    # create interactive ggplot2 graphs
 - There is also a great [cheat sheet](https://images.plot.ly/plotly-documentation/images/r_cheat_sheet.pdf?_ga=2.144655730.634097270.1588348056-452179466.1588348056) for plotly.
 
 ## Summary 
-
 ```{r, include=T, error=F, message=F, echo = T}
 # pre-processing
 library(tidyverse)
@@ -131,12 +129,9 @@ library(ggthemes)
 library(plotly)
 ```
 
-
 ## Stay connected 
 
 - Website:    www.jinyikuang.com
 - Email:      jkuang000@gmail.com
 - Twitter:    @jinyikuang
 - Github:     jinyikuang000
-
-
