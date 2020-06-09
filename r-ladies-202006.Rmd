@@ -58,6 +58,7 @@ expss::var_lab(data$Q1vii)
 expss::val_lab(data$Q1vii)
 ```
 
+
 ## Descriptive statistics  
 ```{r, include=T, error=F, message=F, echo = T}
 library(expss)
@@ -69,23 +70,23 @@ library(openxlsx)
 ```{r, echo = T, eval=F }
 # create a table
 table <- data %>% 
-         tab_cells(gender, education, SES ) %>%
+         tab_cells(gender, education) %>%
          tab_cols(total(), state) %>% 
          tab_stat_cpct() %>%
          tab_pivot() %>%
          set_caption("Table 1. demographic by state ")
 
 # create a workbook
-workbook = createWorkbook()
+workbook <- openxlsx::createWorkbook()
 
 #create a sheet in the workbook
-sheet = addWorksheet(workbook, "Table 1")
+sheet <- addWorksheet(workbook, "Table 1")
 
 # write the table into the sheet 
 xl_write(table, workbook, sheet)
 
 # save workbook
-saveWorkbook(workbook, "output/desc-stat.xlsx", overwrite = TRUE)
+saveWorkbook(workbook, "desc-stat.xlsx", overwrite = TRUE)
 ```
 
 ## Analaysis results
@@ -93,14 +94,8 @@ saveWorkbook(workbook, "output/desc-stat.xlsx", overwrite = TRUE)
 library(stargazer)
 ```
 
-## Analaysis results 
+## Analysis results 
 ![](img/stargazer.png){width=600px}
-
-## Visualization
-```{r, include=T, error=F, message=F, echo = T}
-library(ggplot2)
-library(ggmap)    
-```
 
 ## Visualization
 ```{r, include=T, error=F, message=F, echo = T}
@@ -112,11 +107,47 @@ library(plotly)    # create interactive ggplot2 graphs
 
 - There is also a great [cheat sheet](https://images.plot.ly/plotly-documentation/images/r_cheat_sheet.pdf?_ga=2.144655730.634097270.1588348056-452179466.1588348056) for plotly.
 
-## Summary 
-```{r, include=T, error=F, message=F, echo = T}
-# pre-processing
-library(tidyverse)
+## Visualization
 
+```{r, include=T, error=F, message=F, echo = T}
+library(mapview)
+```
+## Visualization
+```{r, include=T,error=F, message=F, echo = T, warning=F}
+# read date with sf package
+library(sf)   
+india <- sf::st_read("Census_2011/2011_Dist.shp", quiet = T)
+district <- base::subset(india, DISTRICT %in% c( "Pudukkottai","Karur"))
+
+```
+
+## Visualization
+```{r, include=T,error=F, message=F, echo = T, warning=F}
+map <-mapview::mapview(district,
+                # map.types = "OpenStreetMap", 
+                 color = "grey", 
+                 col.region = "grey", 
+                 layer.name = "Sampling district: Pudukkottai & Karur") 
+map
+```
+
+## Visualization
+
+```{r,include=T, error=F, message=F, echo = T}
+ward <- openxlsx::read.xlsx("ward.xlsx")
+ward_sf <- sf::st_as_sf(ward, coords = c('lon', 'lat'))
+
+map + mapview(ward_sf, zcol="treatment", 
+              color = c("grey5", "grey50"), # dot color
+              layer.name = "Treatment and Control Wards", 
+              col.region = c("grey5", "grey50"), # legend color
+              cex = 0.5)
+```
+
+
+## Summary 
+
+```{r, include=T, error=F, message=F, echo = T}
 # Descriptive statistics
 library(expss)
 library(openxlsx)
@@ -127,7 +158,9 @@ library(stargazer)
 # Visualization
 library(ggthemes)
 library(plotly)
+library(mapview)
 ```
+
 
 ## Stay connected 
 
@@ -135,3 +168,5 @@ library(plotly)
 - Email:      jkuang000@gmail.com
 - Twitter:    @jinyikuang
 - Github:     jinyikuang000
+
+
