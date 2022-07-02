@@ -2,4 +2,4 @@
 
 The slides were used for a lightning talk at R-ladies Philly
 
-!()[slide.gif]
+![](https://github.com/jinyi-kuang/r-ladies-talk/blob/master/slide.gif)
